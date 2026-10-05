@@ -5,6 +5,7 @@ public class Laser : MonoBehaviour
 {
     public float speed = 6f;
     public int damage = 1;
+    float remaining;   
 
     Vector3 direction;
 
@@ -16,16 +17,22 @@ public class Laser : MonoBehaviour
         rb.useGravity = false;
     }
 
-    // Called by the spawner right after creating the laser
+    
+
     public void Init(Vector3 moveDirection, float travelDistance)
     {
         direction = moveDirection.normalized;
-        Destroy(gameObject, travelDistance / speed + 1f); // clean up after it passes the start
+        remaining = travelDistance;
     }
 
     void Update()
     {
-        transform.position += direction * speed * Time.deltaTime;
+        float step = speed * Time.deltaTime;
+        transform.position += direction * step;
+
+        remaining -= step;
+        if (remaining <= 0f)
+            Destroy(gameObject);
     }
 
     void OnTriggerEnter(Collider other)
