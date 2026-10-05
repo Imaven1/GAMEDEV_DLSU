@@ -45,4 +45,9 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
         onHealthChanged?.Invoke(currentHealth);
     }
+
+    public int getCurrentHealth()
+    {
+       return currentHealth;
+    }
 }
