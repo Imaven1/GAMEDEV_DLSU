@@ -33,7 +33,6 @@ public class Laser : MonoBehaviour
         if (other.TryGetComponent(out PlayerHealth health))
         {
             health.TakeDamage(damage);
-            Destroy(gameObject);
         }
     }
 }

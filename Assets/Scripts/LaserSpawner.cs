@@ -11,7 +11,9 @@ public class LaserSpawner : MonoBehaviour
     public float corridorWidth = 4f;
     public float spawnInterval = 2f;
     public float laserSpeed = 6f;
-    public float laserThickness = 0.3f; // depth along the direction of travel
+    public float beamThickness = 0.15f;   
+    public float verticalBeamWidth = 0.15f;
+    public float ceilingHeight = 4f;  
 
     float timer;
 
@@ -30,31 +32,38 @@ public class LaserSpawner : MonoBehaviour
         Vector3 toStart = despawnPoint.position - spawnPoint.position;
         toStart.y = 0f;
 
-        Vector3 right = spawnPoint.right;
-        Vector3 size;
-        Vector3 pos = spawnPoint.position;
+        // "Right" from the player's point of view as they walk toward the far end
+        Vector3 playerForward = -toStart.normalized;
+        Vector3 right = Vector3.Cross(Vector3.up, playerForward);
 
-        switch (Random.Range(0, 3))
+        if (Random.value < 0.5f)
         {
-            case 0: // low bar across the whole corridor: jump over it
-                size = new Vector3(corridorWidth, 0.4f, laserThickness);
-                pos += Vector3.up * (size.y / 2f);
-                break;
-
-            case 1: // block on the left: sidestep right
-                size = new Vector3(corridorWidth * 0.6f, 2f, laserThickness);
-                pos += Vector3.up * (size.y / 2f) - right * (corridorWidth * 0.2f);
-                break;
-
-            default: // block on the right: sidestep left
-                size = new Vector3(corridorWidth * 0.6f, 2f, laserThickness);
-                pos += Vector3.up * (size.y / 2f) + right * (corridorWidth * 0.2f);
-                break;
+            // one horizontal beam across the whole corridor: jump over it
+            SpawnBeam(spawnPoint.position + Vector3.up * 0.3f,
+                      new Vector3(corridorWidth, beamThickness, beamThickness), toStart);
         }
+        else
+        {
+            // several standing beams at random spots: weave between them
+            float height = ceilingHeight;
+            int count = 4; // how many beams per spawn (could also be a public field)
+            float maxOffset = (corridorWidth - verticalBeamWidth) / 2f;
 
+            for (int i = 0; i < count; i++)
+            {
+                float x = Random.Range(-maxOffset, maxOffset);
+                SpawnBeam(spawnPoint.position + right * x + Vector3.up * (height / 2f),
+                          new Vector3(verticalBeamWidth, height, beamThickness), toStart);
+            }
+        }
+    }
+  
+    void SpawnBeam(Vector3 pos, Vector3 size, Vector3 toStart)
+    {
         Laser laser = Instantiate(laserPrefab, pos, Quaternion.LookRotation(toStart));
         laser.transform.localScale = size;
         laser.speed = laserSpeed;
         laser.Init(toStart, toStart.magnitude);
     }
+
 }
