@@ -17,6 +17,8 @@ public class LaserSpawner : MonoBehaviour
 
     float timer;
 
+
+
     void Update()
     {
         timer += Time.deltaTime;
