@@ -1,6 +1,6 @@
 using System.Reflection.Emit;
 using UnityEngine;
-using TMPro
+using TMPro;
 
 using System;
 
@@ -13,6 +13,7 @@ public class bottleCounter : MonoBehaviour
     private void OnEnable()
     {
         detector.onCountChanged.AddListener(UpdateLabel);
+        UpdateLabel(detector.Count);
 
     }
 
@@ -23,7 +24,7 @@ public class bottleCounter : MonoBehaviour
 
     private void UpdateLabel(int count)
     {
-        label.text = "Bottles left: {count} ";
+        label.text = $"Cans left: {count} ";
     }
 
 }
