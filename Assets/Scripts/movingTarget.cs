@@ -4,7 +4,7 @@ using UnityEngine;
 public class SimplePlatform : MonoBehaviour
 {
     [SerializeField] private float distance = 5f;  
-    [SerializeField] private float speed = 0.5f;  
+    [SerializeField] private float speed = 0;  
 
     private Rigidbody rb;
     private Vector3 startPos;
