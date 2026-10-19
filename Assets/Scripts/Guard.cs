@@ -17,7 +17,7 @@ public class Guard : MonoBehaviour
     public LayerMask playerMask;
     public LayerMask obstructionMask;
     public float senseRadius = 0.3f;
-    public float sightRange = 5f;
+    public float sightRange = 15f;
     [Range(1f, 180f)] public float sightAngle = 60f;
     public float eyeHeight = 1.5f;
     public Vector3 targetOffset = new Vector3(0f, 1f, 0f);

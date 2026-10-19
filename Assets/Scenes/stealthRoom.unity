@@ -35,7 +35,7 @@ RenderSettings:
   m_DefaultReflectionMode: 0
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
-  m_ReflectionIntensity: 0.731
+  m_ReflectionIntensity: 0
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_UseRadianceAmbientProbe: 0
@@ -819,8 +819,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1430841448}
     - target: {fileID: 1874271440702219711, guid: db9be3600f24f52448b96476bdacb672, type: 3}
+      propertyPath: sightRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874271440702219711, guid: db9be3600f24f52448b96476bdacb672, type: 3}
       propertyPath: senseRadius
-      value: 1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1874271440702219711, guid: db9be3600f24f52448b96476bdacb672, type: 3}
       propertyPath: waypoints.Array.size
@@ -4374,8 +4378,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1430841448}
     - target: {fileID: 1874271440702219711, guid: db9be3600f24f52448b96476bdacb672, type: 3}
+      propertyPath: sightRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874271440702219711, guid: db9be3600f24f52448b96476bdacb672, type: 3}
       propertyPath: senseRadius
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1874271440702219711, guid: db9be3600f24f52448b96476bdacb672, type: 3}
       propertyPath: 'waypoints.Array.data[0]'
@@ -4564,7 +4572,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7989134933418665568, guid: ed3842604f8527d48a26e0493b9e187b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.294571
+      value: 2.46
       objectReference: {fileID: 0}
     - target: {fileID: 7989134933418665568, guid: ed3842604f8527d48a26e0493b9e187b, type: 3}
       propertyPath: m_LocalPosition.z
