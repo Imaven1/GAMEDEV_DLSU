@@ -13,33 +13,37 @@ public class Guard : MonoBehaviour
 
     [Header("Detection")]
     public Transform player;
+    PlayerHealth playerHealth;
     public LayerMask playerMask;
     public LayerMask obstructionMask;
-    public float senseRadius = 3f;
-    public float sightRadius = 10f;
+    public float senseRadius = 0.3f;
+    public float sightRange = 5f;
     [Range(1f, 180f)] public float sightAngle = 60f;
     public float eyeHeight = 1.5f;
     public Vector3 targetOffset = new Vector3(0f, 1f, 0f);
 
-    public GameTimer gameTimer;
-
+  
     int index;
     float waitUntil;
-    bool detected;
 
 
+    void Start()
+    {
+        playerHealth = player.GetComponentInParent<PlayerHealth>();
+
+        if (playerHealth == null)
+            Debug.LogError("PatrolGuard: no PlayerHealth found on the player.");
+    }
 
     // Update is called once per frame
     private void Update()
     {
-        if (detected) return;
 
         Guarding();
 
         if (isDetectingPlayer())
         {
-            detected = true;
-            gameTimer.Lose();
+            playerHealth.TakeDamage(1);
         }
     }
 
@@ -72,9 +76,12 @@ public class Guard : MonoBehaviour
         //Player within sight or area
         Vector3 eye = transform.position + Vector3.up * eyeHeight;
         Vector3 toPlayer = (player.position + targetOffset) - eye;
-        
+
+        if (toPlayer.magnitude > sightRange) return false;
+        if (Vector3.Angle(transform.forward, toPlayer) > sightAngle / 2f) return false;
+
         //Player is not obstructed
-        if (Physics.Raycast(eye, toPlayer.normalized, out RaycastHit hit, sightRadius, playerMask | obstructionMask))
+        if (Physics.Raycast(eye, toPlayer.normalized, out RaycastHit hit, sightRange, playerMask | obstructionMask))
             return ((1 << hit.collider.gameObject.layer) & playerMask) != 0;
 
         return false;
